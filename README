@@ -1,0 +1,32 @@
+This gem is a component for Adhearsion (http://adhearsion.com)
+
+ENUM is a distributed system for converting PSTN phone numbers into VoIP URIs.
+This component was inpired by a blog post by Team Forrest:
+http://www.teamforrest.com/blog/177/use-enum-to-save-real-money/
+
+USAGE:
+Add this component to your Adhearsion application's config/startup.rb
+Example:
+
+    config.component "ahn_enum"
+
+Next install the sample configuration:
+    $ rake components:genconfig
+
+Customize config/components/ahn_enum.yml as necessary.  For example,
+to use the ENUMPlus.org backend you must supply your API key.
+
+To look up ENUM numbers in Adhearsion use this command within dialplan.rb:
+
+    example_context {
+      destination = '14044754840'
+      newdest = enum_lookup(destination)
+    
+      if newdest.nil?
+        # No match found.  Dial the regular PSTN number.
+      else
+        # A VoIP route was found!  Use newdest
+      end
+    }
+
+Enjoy!
